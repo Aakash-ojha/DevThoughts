@@ -15,8 +15,10 @@ const Home = () => {
       </div>
 
       <div className="hidden lg:block">
-        <TrendingTags />
-        <DevSuggestions />
+        <div className="sticky top-6">
+          <TrendingTags />
+          <DevSuggestions />
+        </div>
       </div>
     </div>
   );

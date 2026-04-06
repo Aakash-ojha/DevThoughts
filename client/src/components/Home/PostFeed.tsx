@@ -28,6 +28,32 @@ const dummyPosts = [
     likes: 89,
     comments: 17,
   },
+  {
+    id: 3,
+    name: "Sarah M",
+    username: "sarahm",
+    initials: "SM",
+    avatarColor: "bg-green-100 text-green-700",
+    time: "5h ago",
+    content:
+      "Why Rust is taking over systems programming — a thread for people coming from C++",
+    tags: ["#rust", "#systems"],
+    likes: 89,
+    comments: 17,
+  },
+  {
+    id: 4,
+    name: "Sarah M",
+    username: "sarahm",
+    initials: "SM",
+    avatarColor: "bg-green-100 text-green-700",
+    time: "5h ago",
+    content:
+      "Why Rust is taking over systems programming — a thread for people coming from C++",
+    tags: ["#rust", "#systems"],
+    likes: 89,
+    comments: 17,
+  },
 ];
 
 export default function PostFeed() {

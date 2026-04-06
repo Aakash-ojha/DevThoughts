@@ -86,7 +86,7 @@ export default function ForgotPassword() {
         </CardContent>
       </Card>
 
-      <p className="mt-8 text-center text-xs text-gray-400 max-w-[250px]">
+      <p className="mt-8 text-center text-xs text-gray-400 max-w-62.5">
         Locked out? Contact <b>DevThought Support</b> if you no longer have
         access to your email.
       </p>
