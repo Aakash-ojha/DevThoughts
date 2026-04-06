@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ import {
 export default function Profile() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage
             src="https://github.com/shadcn.png"
