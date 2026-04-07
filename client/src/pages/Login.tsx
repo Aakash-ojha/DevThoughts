@@ -31,7 +31,9 @@ export default function Login() {
   const onSubmit = async (data: FormData) => {
     const toastId = toast.loading("Verifying credentials...");
     try {
+      console.log(data);
       const result = await loginUser(data);
+      console.log(result);
 
       if (result.status === "success") {
         toast.success("Welcome back!", { id: toastId, duration: 2000 });
