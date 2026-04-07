@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgetPassword";
 import AppLayout from "./components/AppLayout";
+import { Toaster } from "./components/ui/sonner";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
         </Route>
       </Routes>
+      <Toaster position="top-right" richColors closeButton />
     </BrowserRouter>
   );
 };

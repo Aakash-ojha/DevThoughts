@@ -2,10 +2,10 @@ import User from "../models/UserModel.js";
 import AppError from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
 
-const register = catchAsync(async (req, res) => {
-  const { name, username, email, password, confirmPassword } = req.body;
+const register = catchAsync(async (req, res, next) => {
+  const { name, email, password, confirmPassword } = req.body;
 
-  if (!name || !username || !email || !password || !confirmPassword) {
+  if (!name || !email || !password || !confirmPassword) {
     return next(new AppError("All fields are required", 400));
   }
 
@@ -17,7 +17,6 @@ const register = catchAsync(async (req, res) => {
 
   const newUser = await User.create({
     name: req.body.name,
-    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
@@ -30,7 +29,7 @@ const register = catchAsync(async (req, res) => {
     .json({ message: "User registered successfully", data: newUser });
 });
 
-const login = async (req, res, next) => {
+const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -45,9 +44,10 @@ const login = async (req, res, next) => {
   }
 
   // For now, we'll just return a success message
-
-  res.status(200).json({ message: "User logged in successfully" });
-};
+  res
+    .status(200)
+    .json({ status: "success", message: "User logged in successfully" });
+});
 
 const logout = (req, res) => {
   res.send("Logout route");

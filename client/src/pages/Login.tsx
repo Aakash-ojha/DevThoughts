@@ -4,7 +4,9 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "@/api/authApi";
+import { toast } from "sonner";
 
 // validation schema
 const schema = z.object({
@@ -15,16 +17,32 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function Login() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    mode: "onTouched",
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+    const toastId = toast.loading("Verifying credentials...");
+    try {
+      const result = await loginUser(data);
+
+      if (result.status === "success") {
+        toast.success("Welcome back!", { id: toastId, duration: 2000 });
+        reset();
+        navigate("/");
+      }
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || "Login failed";
+      toast.error(errorMessage, { id: toastId });
+      reset();
+    }
   };
 
   return (
@@ -41,6 +59,7 @@ export default function Login() {
               <Input
                 {...register("email")}
                 type="email"
+                autoComplete="email"
                 placeholder=" " // Required for peer-placeholder-shown
                 className="peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-300 focus:border-blue-500 placeholder-transparent"
               />
@@ -63,6 +82,7 @@ export default function Login() {
               <Input
                 {...register("password")}
                 type="password"
+                autoComplete="password"
                 placeholder=" " // Required for peer-placeholder-shown
                 className="peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-300 focus:border-blue-500 placeholder-transparent"
               />

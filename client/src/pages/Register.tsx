@@ -4,7 +4,9 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "@/api/authApi";
+import { toast } from "sonner";
 
 const schema = z
   .object({
@@ -21,6 +23,7 @@ const schema = z
 type FormData = z.infer<typeof schema>;
 
 export default function Register() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,7 +33,31 @@ export default function Register() {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log("Registration Data:", data);
+    try {
+      // console.log("Attempting Registration:", data);
+      const result = await registerUser(data);
+      if (
+        result.status === "success" ||
+        result.message === "User registered successfully"
+      ) {
+        // console.log("Registration Successful:", result);
+
+        toast.success("Registration Successful!", {
+          description: "Redirecting you to login page...",
+        });
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      }
+    } catch (err: any) {
+      // This will print the REAL error from your backend
+      const errMessage = err.response?.data?.message || "Internal Server Error";
+
+      toast.error("Registration Failed", {
+        description: errMessage,
+      });
+    }
   };
 
   const handleGoogleSignIn = () => {
@@ -57,6 +84,7 @@ export default function Register() {
               <Input
                 {...register("name")}
                 type="text"
+                autoComplete="username"
                 placeholder=" "
                 className={inputClasses}
               />
@@ -72,6 +100,7 @@ export default function Register() {
               <Input
                 {...register("email")}
                 type="email"
+                autoComplete="email"
                 placeholder=" "
                 className={inputClasses}
               />
@@ -87,6 +116,7 @@ export default function Register() {
               <Input
                 {...register("password")}
                 type="password"
+                autoComplete="new-password"
                 placeholder=" "
                 className={inputClasses}
               />
@@ -102,6 +132,7 @@ export default function Register() {
               <Input
                 {...register("confirmPassword")}
                 type="password"
+                autoComplete="new-password"
                 placeholder=" "
                 className={inputClasses}
               />
