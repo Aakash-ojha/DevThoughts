@@ -52,10 +52,12 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <Card className="w-full max-w-lg p-4 shadow-md rounded-2xl bg-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300/80">
+      <Card className="w-full max-w-lg p-4 shadow-md rounded-2xl bg-gray-200/80">
         <div className="text-center mb-3">
-          <h1 className="text-5xl font-bold text-blue-600">DevThought</h1>
+          <h1 className="text-5xl font-bold text-gray-600">
+            Dev<span className="text-orange-500!">Thought</span>
+          </h1>
         </div>
 
         <CardContent>
@@ -67,7 +69,7 @@ export default function Login() {
                 type="email"
                 autoComplete="email"
                 placeholder=" " // Required for peer-placeholder-shown
-                className="peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-300 focus:border-blue-500 placeholder-transparent"
+                className="peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-400/70 focus:border-blue-500 placeholder-transparent"
               />
               <label
                 className="  absolute left-4 top-4 text-gray-500 transition-all duration-200 pointer-events-none
@@ -90,7 +92,7 @@ export default function Login() {
                 type="password"
                 autoComplete="password"
                 placeholder=" " // Required for peer-placeholder-shown
-                className="peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-300 focus:border-blue-500 placeholder-transparent"
+                className="peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-400/70 focus:border-blue-500 placeholder-transparent"
               />
               <label
                 className="absolute left-4 top-4 text-gray-500 transition-all duration-200 pointer-events-none
@@ -110,7 +112,7 @@ export default function Login() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700 rounded-lg"
+              className="w-full h-12 text-lg font-semibold  bg-green-500 hover:bg-green-600  rounded-lg"
             >
               {isSubmitting ? "Logging in..." : "Log In"}
             </Button>
@@ -138,7 +140,7 @@ export default function Login() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="px-8 h-12 text-green-600 border-green-500 font-semibold hover:bg-green-50 rounded-lg"
+                  className="px-8 h-12 text-green-600 border-gray-300 font-semibold hover:bg-green-50 rounded-lg"
                 >
                   Create New Account
                 </Button>

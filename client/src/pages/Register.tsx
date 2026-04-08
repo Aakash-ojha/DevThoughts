@@ -69,15 +69,17 @@ export default function Register() {
   };
 
   const inputClasses =
-    "peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-300 focus:border-blue-500 placeholder-transparent outline-none transition-all";
+    "peer w-full h-14 px-4 pt-4 text-base rounded-lg border border-gray-400/40 focus:border-blue-500 placeholder-transparent outline-none transition-all";
   const labelClasses =
     "absolute left-4 top-4 text-gray-500 transition-all duration-200 pointer-events-none peer-focus:-translate-y-3 peer-focus:text-xs peer-focus:text-blue-500 peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-xs";
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <Card className="w-full max-w-lg p-4 shadow-md rounded-2xl bg-white border-none">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300 p-4">
+      <Card className="w-full max-w-lg p-4 shadow-md rounded-2xl bg-gray-200/90 border-none">
         <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold text-blue-600">DevThought</h1>
+          <h1 className="text-4xl font-bold text-gray-600">
+            Dev<span className="text-orange-500!">Thought</span>
+          </h1>
           <p className="text-gray-500 mt-1 font-medium">Create a new account</p>
         </div>
 
@@ -150,7 +152,7 @@ export default function Register() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className=" cursor-pointer w-full h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700 rounded-lg"
+              className=" cursor-pointer w-full h-12 text-lg font-semibold bg-green-500 hover:bg-green-600 rounded-lg"
             >
               {isSubmitting ? "Creating Account..." : "Sign Up"}
             </Button>
