@@ -50,9 +50,11 @@ export default function Register() {
           navigate("/login");
         }, 1500);
       }
-    } catch (err: any) {
+    } catch (err) {
       // This will print the REAL error from your backend
-      const errMessage = err.response?.data?.message || "Internal Server Error";
+      const errMessage =
+        (err as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || "Internal Server Error";
 
       toast.error("Registration Failed", {
         description: errMessage,
