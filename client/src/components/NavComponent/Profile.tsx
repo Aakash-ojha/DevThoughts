@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 import {
   DropdownMenu,
@@ -14,17 +14,32 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuthStore } from "@/store/useAuthStore";
+
+const getInitailName = (name: string | undefined) => {
+  console.log(name);
+  if (!name) return "??";
+  const parts = name.trim().split(" ");
+
+  return parts.length >= 2
+    ? `${parts[0][0]}${parts[1][0]}`.toUpperCase()
+    : name.slice(0, 2).toUpperCase();
+};
 
 export default function Profile() {
+  const user = useAuthStore((state) => state.user);
+
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage
-            src="https://github.com/shadcn.png"
-            alt="@shadcn"
+            src={user?.profilePicture}
+            alt={user?.name}
             className="grayscale"
           />
+
+          <AvatarFallback>{getInitailName(user?.name)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="start">

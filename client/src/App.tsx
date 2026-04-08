@@ -5,8 +5,18 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgetPassword";
 import AppLayout from "./components/AppLayout";
 import { Toaster } from "./components/ui/sonner";
+import { useAuthStore } from "./store/useAuthStore";
+import { useEffect } from "react";
 
 const App = () => {
+  const { checkAuth, isLoading } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  if (isLoading) return <div>Loadings...</div>;
+
   return (
     <BrowserRouter>
       <Routes>

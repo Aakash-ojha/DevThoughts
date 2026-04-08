@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "@/api/authApi";
 import { toast } from "sonner";
+import { useAuthStore } from "@/store/useAuthStore";
 
 // validation schema
 const schema = z.object({
@@ -18,6 +19,8 @@ type FormData = z.infer<typeof schema>;
 
 export default function Login() {
   const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
+
   const {
     register,
     handleSubmit,
@@ -36,6 +39,7 @@ export default function Login() {
       console.log(result);
 
       if (result.status === "success") {
+        setAuth(result.data.user);
         toast.success("Welcome back!", { id: toastId, duration: 2000 });
         reset();
         navigate("/");

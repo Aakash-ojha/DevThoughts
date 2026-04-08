@@ -6,7 +6,11 @@ const CreatePost = () => {
   return (
     <div className="w-full h-40 p-3 shadow-[0_0_20px_rgba(0,0,0,0.13)] flex gap-3 flex-col">
       <div className="flex flex-row gap-6 items-center">
-        <img src="" alt="ak" className="w-15 h-14 bg-black p-2 rounded-full" />
+        <img
+          src="/vite.logo"
+          alt="ak"
+          className="w-15 h-14 bg-black p-2 rounded-full"
+        />
         <Input placeholder="what is on you mind?" />
       </div>
 

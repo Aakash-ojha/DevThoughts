@@ -61,6 +61,7 @@ export default function Register() {
   };
 
   const handleGoogleSignIn = () => {
+    window.location.href = "http://localhost:8000/api/auth/google";
     console.log("Redirecting to Google Auth...");
     // window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
@@ -147,7 +148,7 @@ export default function Register() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700 rounded-lg"
+              className=" cursor-pointer w-full h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700 rounded-lg"
             >
               {isSubmitting ? "Creating Account..." : "Sign Up"}
             </Button>
@@ -165,7 +166,7 @@ export default function Register() {
               type="button"
               variant="outline"
               onClick={handleGoogleSignIn}
-              className="w-full h-12 flex items-center justify-center gap-2 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-700"
+              className="w-full cursor-pointer h-12 flex items-center justify-center gap-2 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-700"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -191,7 +192,7 @@ export default function Register() {
             <Button
               variant="outline"
               type="button"
-              className="w-full h-12 flex items-center justify-center gap-2 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-700"
+              className="w-full cursor-pointer h-12 flex items-center justify-center gap-2 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-700"
             >
               <svg
                 className="mr-2 h-5 w-5"
