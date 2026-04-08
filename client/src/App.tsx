@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -7,6 +7,16 @@ import AppLayout from "./components/AppLayout";
 import { Toaster } from "./components/ui/sonner";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
+
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated } = useAuthStore((state) => state);
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+};
+
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated } = useAuthStore((state) => state);
+  return isAuthenticated ? <Navigate to="/" /> : <>{children}</>;
+};
 
 const App = () => {
   const { checkAuth, isLoading } = useAuthStore();
@@ -20,12 +30,46 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
+          }
+        />
 
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<Home />} />
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
       <Toaster position="top-right" richColors closeButton />

@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   checkAuth: async () => {
     try {
       const response = await getMe();
-      console.log("Full API Response:", response.data);
+      // console.log("Full API Response:", response.data);
       set({
         user: response.data.user,
         isAuthenticated: true,
