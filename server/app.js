@@ -1,5 +1,7 @@
 import express from "express";
 import authRoutes from "./routes/auth.js";
+import tagsRoute from "./routes/tagRoute.js";
+import postRoute from "./routes/postRoute.js";
 import errorController from "./controllers/errorController.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -21,6 +23,8 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoutes);
+app.use("/api/tags", tagsRoute);
+app.use("/api/post", postRoute);
 
 passport.use(
   new GoogleStrategy(

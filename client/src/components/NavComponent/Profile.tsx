@@ -15,16 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/store/useAuthStore";
-
-const getInitailName = (name: string | undefined) => {
-  console.log(name);
-  if (!name) return "??";
-  const parts = name.trim().split(" ");
-
-  return parts.length >= 2
-    ? `${parts[0][0]}${parts[1][0]}`.toUpperCase()
-    : name.slice(0, 2).toUpperCase();
-};
+import getInitailName from "@/utlis/getInitialName";
 
 export default function Profile() {
   const user = useAuthStore((state) => state.user);

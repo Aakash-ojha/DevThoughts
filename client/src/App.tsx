@@ -25,7 +25,7 @@ const App = () => {
     checkAuth();
   }, [checkAuth]);
 
-  if (isLoading) return <div>Loadings...</div>;
+  if (isLoading) return;
 
   return (
     <BrowserRouter>

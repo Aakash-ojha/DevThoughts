@@ -1,20 +1,38 @@
 import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const postSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "Please provide a title for the post"],
+const postSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Please provide a title for the post"],
+    },
+    content: {
+      type: String,
+      required: [true, "Please provide content for the post"],
+    },
+    codeSnippet: {
+      type: String,
+      trim: true,
+    },
+    image: [
+      {
+        type: String,
+        default: [],
+      },
+    ],
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "A post must have an author"],
+    },
+
+    tags: [{ type: Schema.ObjectId, ref: "Tag" }],
   },
-  content: {
-    type: String,
-    required: [true, "Please provide content for the post"],
+  {
+    timestamps: true,
   },
-  photo: {
-    type: String,
-    required: [false, "Please provide a photo for the post"],
-  },
-  createdAt: { type: Date, default: Date.now },
-});
+);
 
 const Post = mongoose.model("Post", postSchema);
 

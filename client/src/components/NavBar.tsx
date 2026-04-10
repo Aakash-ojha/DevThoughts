@@ -8,13 +8,23 @@ import {
 } from "@/components/ui/popover";
 import { Bell, MessageCircleCodeIcon, Plus } from "lucide-react";
 import Profile from "./NavComponent/Profile";
+import { CreatePostModal } from "./Home/CreatePostModal";
+import { usePostStore } from "@/store/usePostStore";
 
 const PostNav = () => {
+  const openModal = usePostStore((state) => state.openModal);
   return (
-    <Button variant="outline" className="flex gap-2 rounded-xl px-4">
-      <Plus className="w-5 h-5" />
-      Post
-    </Button>
+    <>
+      <Button
+        variant="outline"
+        className="flex gap-2 rounded-xl px-4"
+        onClick={openModal}
+      >
+        <Plus className="w-5 h-5" />
+        Post
+      </Button>
+      <CreatePostModal />
+    </>
   );
 };
 

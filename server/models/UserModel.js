@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import validator from "validator";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -14,9 +15,9 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, "Please provide your email"],
     unique: true,
     lowercase: true,
+    validate: [validator.isEmail, "Please provide a valid email"],
   },
   phoneNo: {
     type: String,
@@ -35,6 +36,12 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     required: function () {
       return this.authProvider === "local";
+    },
+    validate: {
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: "Password are not same",
     },
     select: false,
   },

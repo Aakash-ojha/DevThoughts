@@ -4,7 +4,7 @@ import app from "./app.js";
 
 const PORT = process.env.PORT || 8000;
 
-const DB = process.env.MONGO_URI.replace(
+const DB = process.env.MONGO_URL.replace(
   "<db_password>",
   process.env.DB_PASSWORD,
 );
