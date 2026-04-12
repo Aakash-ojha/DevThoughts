@@ -11,4 +11,17 @@ const createPost = async function (PostData: CreatePostData) {
   }
 };
 
-export { createPost };
+const getPosts = async function (page = 1, limit = 5) {
+  try {
+    const response = await apiClient.get(
+      `/post/getpost?page=${page}&limit=${limit}`,
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export { createPost, getPosts };

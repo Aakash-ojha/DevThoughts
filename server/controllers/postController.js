@@ -19,4 +19,27 @@ const createPost = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createPost };
+const getPosts = catchAsync(async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 5;
+
+  const offset = (page - 1) * limit;
+
+  console.log("page", page, "limit", limit);
+
+  const posts = await Post.find()
+    .populate("author", "name username")
+    .populate("tags")
+    .populate("comments.user", "name avatar")
+    .sort("-createdAt")
+    .skip(offset)
+    .limit(limit);
+
+  res.status(200).json({
+    length: posts.length,
+    status: "success",
+    data: posts,
+  });
+});
+
+export { createPost, getPosts };

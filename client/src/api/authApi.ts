@@ -12,9 +12,14 @@ const loginUser = async (FormData: LoginData) => {
   return response.data;
 };
 
+const logout = async () => {
+  const response = await apiClient.post("/auth/logout");
+  return response.data;
+};
+
 const getMe = async () => {
   const response = await apiClient.get("/auth/getMe");
   return response.data;
 };
 
-export { registerUser, loginUser, getMe };
+export { registerUser, loginUser, getMe, logout };

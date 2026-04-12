@@ -33,7 +33,7 @@ const CreatePost = () => {
         </Button>
         <Button variant="outline">
           <CircleQuestionMark />
-          Quesetion
+          Question
         </Button>
       </div>
     </div>

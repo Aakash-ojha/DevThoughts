@@ -34,7 +34,7 @@ export function CreatePostModal() {
     const loadData = async () => {
       try {
         const tagArray = await getTags();
-        console.log(tagArray);
+        // console.log(tagArray);
         setTags(tagArray);
       } catch (err) {
         console.error("Fetch failed", err);

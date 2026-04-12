@@ -107,7 +107,16 @@ const login = catchAsync(async (req, res, next) => {
 
 // ====================== Logout ============================
 const logout = (req, res) => {
-  res.send("Logout route");
+  res.clearCookie("jwt", "expiredtoken", {
+    expires: Date.now(0),
+    httpOnly: true,
+    sameSite: "lax",
+  });
+
+  res.status(200).json({
+    status: "success",
+    message: "Logged out successfully",
+  });
 };
 
 // ====================== Get user if login ============================

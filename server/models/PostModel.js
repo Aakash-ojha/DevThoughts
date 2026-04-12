@@ -26,6 +26,20 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "A post must have an author"],
     },
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        default: [],
+      },
+    ],
+    comments: [
+      {
+        user: { type: mongoose.Schema.ObjectId, ref: "User", required: true },
+        text: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
 
     tags: [{ type: Schema.ObjectId, ref: "Tag" }],
   },

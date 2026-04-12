@@ -1,3 +1,4 @@
+import { logout } from "@/api/authApi";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 import {
@@ -16,9 +17,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/store/useAuthStore";
 import getInitailName from "@/utlis/getInitialName";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  const logoutUser = useAuthStore((state) => state.logoutUser);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error("Server was unreachable, but we continue...", err);
+    } finally {
+      logoutUser();
+      navigate("/login");
+    }
+  };
 
   return (
     <DropdownMenu modal={false}>
@@ -76,7 +91,7 @@ export default function Profile() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogout}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>

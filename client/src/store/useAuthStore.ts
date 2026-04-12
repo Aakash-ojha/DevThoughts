@@ -20,7 +20,7 @@ interface AuthState {
   isLoading: boolean;
   checkAuth: () => Promise<void>;
   setAuth: (user: User) => void;
-  logout: () => void;
+  logoutUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -48,5 +48,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setAuth: (user) => set({ user, isAuthenticated: true, isLoading: false }),
 
-  logout: () => set({ user: null, isAuthenticated: false, isLoading: false }),
+  logoutUser: () =>
+    set({ user: null, isAuthenticated: false, isLoading: false }),
 }));
