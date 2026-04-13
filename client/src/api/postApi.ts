@@ -11,12 +11,13 @@ const createPost = async function (PostData: CreatePostData) {
   }
 };
 
-const getPosts = async function (page = 1, limit = 5) {
+const getPosts = async function (page = 1, limit = 5, tag?: string) {
   try {
-    const response = await apiClient.get(
-      `/post/getpost?page=${page}&limit=${limit}`,
-    );
-    console.log(response.data);
+    const url = tag
+      ? `/post/getpost?page=${page}&limit=${limit}&tag=${tag}` // with tag
+      : `/post/getpost?page=${page}&limit=${limit}`; // without tag
+
+    const response = await apiClient.get(url);
     return response.data;
   } catch (err) {
     console.error(err);

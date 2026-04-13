@@ -7,7 +7,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import type { Post } from "@/types/postType"; // Import the interface we created
+import type { Post } from "@/types/postType";
 
 interface PostCardProps {
   post: Post;

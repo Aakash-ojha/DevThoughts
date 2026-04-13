@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Home,
@@ -10,6 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { getTags } from "@/api/getTags"; // ← import
 
 const navLinks = [
   { label: "Home", to: "/", icon: Home },
@@ -19,22 +20,32 @@ const navLinks = [
   { label: "AI Tools", to: "/ai-tools", icon: Bot },
 ];
 
-const languages = [
-  "JavaScript",
-  "Python",
-  "TypeScript",
-  "Java",
-  "C++",
-  "Go",
-  "Rust",
-  "Swift",
-  "PHP",
-  "C#",
-];
+interface Props {
+  selectedTag: string | null;
+  setSelectedTag: (tag: string | null) => void;
+}
 
-export default function AppSidebar() {
+export default function AppSidebar({ selectedTag, setSelectedTag }: Props) {
   const [collapsed, setCollapsed] = useState(false);
+  const [tags, setTags] = useState<ITag[]>([]);
   const location = useLocation();
+
+  // fetch tags from backend
+  useEffect(() => {
+    const fetchTags = async () => {
+      const data = await getTags();
+      setTags(data);
+    };
+    fetchTags();
+  }, []);
+
+  const handleTagClick = (tagName: string) => {
+    if (selectedTag === tagName) {
+      setSelectedTag(null); // ← click same tag = deselect = show all posts
+    } else {
+      setSelectedTag(tagName); // ← click new tag = filter posts
+    }
+  };
 
   return (
     <aside
@@ -56,7 +67,6 @@ export default function AppSidebar() {
         </button>
       </div>
 
-      {/* Scrollable content */}
       <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         {/* Nav Links */}
         <nav className="flex flex-col gap-1 p-2">
@@ -82,36 +92,49 @@ export default function AppSidebar() {
 
         <Separator className="mx-2" />
 
-        {/* Languages */}
+        {/* Tags from backend */}
         {!collapsed && (
           <div className="p-2">
             <p className="text-xs text-slate-400 font-semibold uppercase tracking-widest px-3 py-2">
               Languages
             </p>
             <div className="flex flex-col gap-1">
-              {languages.map((lang) => (
+              {tags.map((tag) => (
                 <button
-                  key={lang}
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-black transition-all text-sm text-left whitespace-nowrap overflow-hidden"
+                  key={tag._id}
+                  onClick={() => handleTagClick(tag.name)}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-sm text-left whitespace-nowrap overflow-hidden
+                    ${
+                      selectedTag === tag.name
+                        ? "bg-slate-200 text-black font-medium" // ← selected
+                        : "text-slate-500 hover:bg-slate-100 hover:text-black"
+                    }`}
                 >
-                  <span className="w-2 h-2 rounded-full bg-slate-300 shrink-0" />
-                  {lang}
+                  <span
+                    className="w-2 h-2 rounded-full shrink-0"
+                    style={{ backgroundColor: tag.color }} // ← real color!
+                  />
+                  {tag.name}
                 </button>
               ))}
             </div>
           </div>
         )}
 
-        {/* Collapsed — show dots only */}
+        {/* Collapsed dots */}
         {collapsed && (
           <div className="flex flex-col gap-1 p-2 mt-1">
-            {languages.map((lang) => (
+            {tags.map((tag) => (
               <div
-                key={lang}
-                title={lang}
+                key={tag._id}
+                title={tag.name}
+                onClick={() => handleTagClick(tag.name)}
                 className="flex items-center justify-center py-2 cursor-pointer"
               >
-                <span className="w-2 h-2 rounded-full bg-slate-300" />
+                <span
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: tag.color }}
+                />
               </div>
             ))}
           </div>
