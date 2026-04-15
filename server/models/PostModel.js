@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Please provide a title for the post"],
+      required: [false, "Please provide a title for the post"],
     },
     content: {
       type: String,
@@ -31,13 +31,6 @@ const postSchema = new mongoose.Schema(
         type: mongoose.Schema.ObjectId,
         ref: "User",
         default: [],
-      },
-    ],
-    comments: [
-      {
-        user: { type: mongoose.Schema.ObjectId, ref: "User", required: true },
-        text: { type: String, required: true },
-        createdAt: { type: Date, default: Date.now },
       },
     ],
 

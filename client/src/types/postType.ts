@@ -43,3 +43,10 @@ export type CreatePostData = {
   image?: string[];
   tags?: string[];
 };
+
+export interface ITrendingTag {
+  name: string;
+  color: string;
+  slug: string;
+  count: number;
+}

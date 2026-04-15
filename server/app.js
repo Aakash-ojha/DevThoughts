@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth20";
 import User from "./models/UserModel.js";
+import userRoute from "./routes/userRouter.js";
+import commentRoute from "./routes/commentRoute.js";
 
 const app = express();
 app.use(passport.initialize());
@@ -25,6 +27,8 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/tags", tagsRoute);
 app.use("/api/post", postRoute);
+app.use("/api/user", userRoute);
+app.use("/api/comment", commentRoute);
 
 passport.use(
   new GoogleStrategy(

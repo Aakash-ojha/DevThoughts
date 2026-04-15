@@ -11,7 +11,29 @@ const getTag = catchAsync(async (req, res) => {
 const getTrendingTags = catchAsync(async (req, res, nexxt) => {
   const trendingTags = await Post.aggregate([
     { $unwind: "$tags" },
-    { $group: { _id: "$tags" } },
+    { $group: { _id: "$tags", count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: 6 },
+
+    {
+      $lookup: {
+        // ← get tag details
+        from: "tags",
+        localField: "_id",
+        foreignField: "_id",
+        as: "tag",
+      },
+    },
+    { $unwind: "$tag" },
+    {
+      $project: {
+        _id: 0,
+        name: "$tag.name",
+        color: "$tag.color",
+        slug: "$tag.slug",
+        count: 1, // ← post count
+      },
+    },
   ]);
 
   res.status(200).json({

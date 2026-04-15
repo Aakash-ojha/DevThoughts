@@ -1,6 +1,6 @@
 import { getPosts } from "@/api/postApi.js";
 import PostCard from "./PostCard";
-import PostCardSkeleton from "./PostCardSkeleton"; // ← import
+import PostCardSkeleton from "./PostCardSkeleton";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
@@ -29,9 +29,15 @@ export default function PostFeed() {
         hasMoreRef.current = false;
         setHasMore(false);
       } else {
-        setPostItem((prev) =>
-          reset ? response.data : [...prev, ...response.data],
-        );
+        setPostItem((prev) => {
+          if (reset) return response.data; // ← on reset just replace
+          const uniqueNewPosts = response.data.filter(
+            // ← on scroll, filter duplicates
+            (newPost: any) =>
+              !prev.some((oldPost) => oldPost._id === newPost._id),
+          );
+          return [...prev, ...uniqueNewPosts];
+        });
         pageRef.current = currentPage + 1;
       }
     } catch (error) {
@@ -49,7 +55,12 @@ export default function PostFeed() {
     loadingRef.current = false;
     setHasMore(true);
     setPostItem([]);
-    fetchPosts(true);
+
+    const timer = setTimeout(() => {
+      fetchPosts(true); // ← only runs once because clearTimeout cancels first run!
+    }, 0);
+
+    return () => clearTimeout(timer); // ← React dev mode: cancels first run!
   }, [selectedTag]);
 
   // scroll listener
@@ -74,7 +85,6 @@ export default function PostFeed() {
         <PostCard key={post._id} post={post} />
       ))}
 
-      {/* show 3 skeletons while loading */}
       {loading && (
         <>
           <PostCardSkeleton />

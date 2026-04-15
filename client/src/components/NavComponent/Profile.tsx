@@ -24,6 +24,10 @@ export default function Profile() {
   const user = useAuthStore((state) => state.user);
   const logoutUser = useAuthStore((state) => state.logoutUser);
 
+  const goToProfile = () => {
+    navigate(`/profile/${user?._id}`);
+  };
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -51,7 +55,7 @@ export default function Profile() {
       <DropdownMenuContent className="w-40" align="start">
         <DropdownMenuGroup>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={goToProfile}>
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>

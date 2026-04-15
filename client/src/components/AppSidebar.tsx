@@ -10,7 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { getTags } from "@/api/getTags"; // ← import
+import { getTags, type ITag } from "@/api/getTags"; // ← import
 
 const navLinks = [
   { label: "Home", to: "/", icon: Home },

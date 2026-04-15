@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -7,6 +8,7 @@ import AppLayout from "./components/AppLayout";
 import { Toaster } from "./components/ui/sonner";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
+import ProfilePage from "./pages/ProfilePage";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuthStore((state) => state);
@@ -17,6 +19,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuthStore((state) => state);
   return isAuthenticated ? <Navigate to="/" /> : <>{children}</>;
 };
+const queryClient = new QueryClient();
 
 const App = () => {
   const { checkAuth, isLoading } = useAuthStore();
@@ -28,52 +31,62 @@ const App = () => {
   if (isLoading) return;
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <PublicRoute>
-              <ForgotPassword />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
           <Route
-            path="/"
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+
+          <Route
             element={
               <ProtectedRoute>
-                <Home />
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+          <Route
+            path="/profile/:id"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />
-        </Route>
-      </Routes>
-      <Toaster position="top-right" richColors closeButton />
-    </BrowserRouter>
+        </Routes>
+        <Toaster position="top-right" richColors closeButton />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

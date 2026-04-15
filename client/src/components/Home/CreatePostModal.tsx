@@ -48,7 +48,7 @@ export function CreatePostModal() {
 
     try {
       const PostData = {
-        title: content.slice(0, 50) || "Untitled Post",
+        title: "",
         content,
         tags: selectedTagIds,
         codeSnippet: codeSnippet || undefined,

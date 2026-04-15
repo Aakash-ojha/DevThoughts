@@ -1,4 +1,4 @@
-import type { CreatePostData } from "@/types/postType";
+import type { CreatePostData, ITrendingTag } from "@/types/postType";
 import { apiClient } from "./api";
 
 const createPost = async function (PostData: CreatePostData) {
@@ -25,4 +25,9 @@ const getPosts = async function (page = 1, limit = 5, tag?: string) {
   }
 };
 
-export { createPost, getPosts };
+const getTrendingTags = async (): Promise<ITrendingTag[]> => {
+  const { data } = await apiClient.get("/tags/trending");
+  return data.data;
+};
+
+export { createPost, getPosts, getTrendingTags };

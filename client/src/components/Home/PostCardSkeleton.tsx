@@ -29,8 +29,8 @@ export default function PostCardSkeleton() {
       </div>
 
       {/* Code snippet skeleton */}
-      <div className="bg-slate-950 rounded-lg p-3 mb-3">
-        <div className="w-48 h-3 bg-slate-800 animate-pulse rounded-full" />
+      <div className="bg-slate-200 rounded-lg p-3 mb-3">
+        <div className="w-48 h-3 bg-slate-300 animate-pulse rounded-full" />
       </div>
 
       {/* Tags skeleton */}
